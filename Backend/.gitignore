@@ -1,0 +1,5 @@
+#file to be ignored
+
+node_modules
+.env
+dist
