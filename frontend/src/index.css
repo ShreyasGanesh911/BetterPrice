@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  margin: 0;
+  padding: 0;
+}
+.page{
+  width: 99vw;
+  min-height: 100vh;
+  height: auto;
+}
+
+.displayFlex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg-dark{
+  background-color: rgb(16, 16, 16);
+}
