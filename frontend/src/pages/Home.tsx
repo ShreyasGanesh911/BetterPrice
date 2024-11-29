@@ -16,7 +16,7 @@ export default function Home() {
             setAData(undefined)
             setFData(undefined)
             setShowLoad(true)
-            axios.get(`http://localhost:4000/e/products?product=${search}`).then((e)=>{
+            axios.get(`http://localhost:4000/products/findproducts?product=${search}`).then((e)=>{
             const data:Data = e.data
             setAData(data.AmazonData)
             setFData(data.FlipkartData)
@@ -44,7 +44,7 @@ export default function Home() {
         
       </div>
       </>:  <Hero/>}
-      {aData?.length ===0 && fData?.length ===0 ? <p className='text-white'>No products found</p> : null }
+      {aData?.length ===0 && fData?.length ===0 ? <p className='text-white text-center text-4xl'>No results found <span>❌</span></p> : null }
     </section>
   )
 }

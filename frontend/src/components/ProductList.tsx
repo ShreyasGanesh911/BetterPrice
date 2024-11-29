@@ -11,7 +11,7 @@ export default function ProductList({title,products}:Props) {
             <div className='w-full h-24 border-r border-l displayFlex'>
                 <h2 className='text-5xl font-thin text-white'>{title}</h2>
             </div>
-            {products?.map((e,i)=><ProductCard title={e.title} price = {e.price} key={i} link={e.link}/>)}
+            {products?.map((e,i)=><ProductCard title={e.title} price = {e.price} key={i} link={e.link} img={e.img}/>)}
             
         </div>
     </>
