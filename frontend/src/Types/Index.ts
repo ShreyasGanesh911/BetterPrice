@@ -1,7 +1,8 @@
 export type ProductDetails = {
     title:string
     price: string
-    link:string
+    link:string,
+    img: string
 }
 
 export type Data = {

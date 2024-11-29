@@ -3,5 +3,5 @@ import { scrapData } from "../controller/index.js"
 
 const digitalRouter = express.Router()
 
-digitalRouter.get("/products",scrapData)
+digitalRouter.get("/findproducts",scrapData)
 export default digitalRouter

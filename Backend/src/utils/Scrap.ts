@@ -1,31 +1,46 @@
 import puppeteer from "puppeteer";
+import { Attributes } from "../assets/attributes.js";
 type List = {
     title: string,
     price: string
-    reviews?: string,
-    link: string
+    link: string,
+    img: string
 }
-const scrap = async(url:string,titleClass:string,priceClass:string,reviewClass:string,linkClass:string)=>{
-    const browser = await puppeteer.launch({headless: true})
+
+const scrap = async(url:string,obj:Attributes)=>{
+    const browser = await puppeteer.launch({headless: true,userDataDir:"./temp"})
     const page = await browser.newPage()
     await page.goto(url)
-    const data = await page.evaluate((priceClass,titleClass,reviewClass,linkClass)=>{
+
+    const data = await page.evaluate((obj)=>{
         let list:List[] = []
-        const titleArr = Array.from(document.querySelectorAll(titleClass)).map(e=>e.innerHTML)
-        const priceArr = Array.from(document.getElementsByClassName(priceClass)).map(e=>e.innerHTML)
-        const reviewArr = Array.from(document.querySelectorAll(reviewClass)).map(e=>e.innerHTML)
-        const linkArr = Array.from(document.querySelectorAll(linkClass) ).map((e)=>(e as HTMLAnchorElement).href)
+        let titleArr,priceArr,linkArr,imgArr
+        titleArr = Array.from(document.querySelectorAll(obj.title1)).map(e=>e.innerHTML)
+       
+        if(titleArr.length<2){
+            titleArr = Array.from(document.querySelectorAll(obj.title2)).map(e=>e.innerHTML)
+            priceArr = Array.from(document.getElementsByClassName(obj.price2)).map(e=>e.innerHTML)
+            linkArr = Array.from(document.querySelectorAll(obj.link2)).map((e)=>(e as HTMLAnchorElement).href)
+            imgArr = Array.from(document.getElementsByClassName(obj.pic2)).map((e)=>(e as HTMLImageElement).src)
+        }
+        else{
+            priceArr = Array.from(document.getElementsByClassName(obj.price1)).map(e=>e.innerHTML)
+            linkArr = Array.from(document.querySelectorAll(obj.link1) ).map((e)=>(e as HTMLAnchorElement).href)
+            imgArr = Array.from(document.getElementsByClassName(obj.pic1)).map((e)=>(e as HTMLImageElement).src)
+        }
+       
+       
         let it = Math.min(titleArr.length,priceArr.length)
-        for(let i=0;i<it;i++){
+        for(let i=0;i<titleArr.length;i++){
             list.push({
                 title:titleArr[i],
                 price:priceArr[i],
-                reviews:reviewArr[i]? reviewArr[i] :"",
-                link:linkArr[i]
+                link:linkArr[i],
+                img: imgArr[i]
             })
         }
         return list
-    },priceClass,titleClass,reviewClass,linkClass)
+    },obj)
     
     await browser.close()
 
